@@ -28,18 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     private var city: String? = null
 
-    /*
-        ======================== TO-DO =====================
-        ARRUMAR LAYOUT COM DIVISORIAS                #FEITO
-        ARRUMAR CORES E TEMA
-        ESCONDER TECLADO AO CLICAR EM BUSCAR E DA TUDO CERTO SEM ERROS      #FEITO
-
-        ===> BUGS
-        ERROR DO INPUTLAYOUT COBRINDO O ENDICON DE CLEAR TEXT
-    */
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -148,6 +136,7 @@ class MainActivity : AppCompatActivity() {
                 hideKeyboard()
             } else {
                 withContext(Dispatchers.Main) {
+                    binding.cityInputLayout.errorIconDrawable = null
                     binding.cityInputLayout.error = "Cidade indisponível no momento."
                 }
                 Log.i("api", "Erro ao fazer a requisição.")
