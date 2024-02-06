@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
             city = binding.cityInputText.text.toString()
             if (validateCity()) {
+                hideKeyboard()
                 getData()
             }
         }
@@ -117,8 +118,19 @@ class MainActivity : AppCompatActivity() {
 
                     withContext(Dispatchers.Main) {
                         with(binding) {
+                            //Picasso.get().load(countryFlagPath).into(ivCountryFlag)
+                            val countryFlagLoadJob = launch {
+                                Picasso.get().load(countryFlagPath).into(ivCountryFlag)
+                            }
+                            //Picasso.get().load(descriptionImagePath).into(ivCloud)
+                            val descriptionImageLoadJob = launch {
+                                Picasso.get().load(descriptionImagePath).into(ivCloud)
+                            }
+
+                            countryFlagLoadJob.join()
+                            descriptionImageLoadJob.join()
+
                             tvCity.text = city
-                            Picasso.get().load(countryFlagPath).into(ivCountryFlag)
 
                             tvDateTime.text = weatherDate
                             tvTemp.text = temperature
@@ -127,7 +139,6 @@ class MainActivity : AppCompatActivity() {
                             tvThermalSensation.text = thermalSensation
 
                             tvDescription.text = weatherDescription
-                            Picasso.get().load(descriptionImagePath).into(ivCloud)
 
                             tvHumidity.text = humidity
                             tvWind.text = windSpeed
@@ -143,8 +154,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-                hideKeyboard()
             } else {
                 withContext(Dispatchers.Main) {
                     binding.cityInputLayout.errorIconDrawable = null
