@@ -1,11 +1,15 @@
 package com.wcsm.cidadetempo
 
 import android.content.Context
+import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatDelegate
 import com.squareup.picasso.Picasso
 import com.wcsm.cidadetempo.api.RetrofitService.weatherAPI
 import com.wcsm.cidadetempo.databinding.ActivityMainBinding
@@ -102,8 +106,8 @@ class MainActivity : AppCompatActivity() {
                     val descriptionImagePath = "https://openweathermap.org/img/wn/${result.weather[0].icon}.png"
                     Log.i("api", "image path: $descriptionImagePath")
 
-                    val humidity = "${result.main.humidity}%"
-                    val windSpeed = "${result.wind.speed}km/h"
+                    val humidity = "Umidade ${result.main.humidity}%"
+                    val windSpeed = "Vento ${result.wind.speed}km/h"
 
                     withContext(Dispatchers.Main) {
                         with(binding) {
