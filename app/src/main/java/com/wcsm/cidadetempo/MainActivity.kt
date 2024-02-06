@@ -65,9 +65,11 @@ class MainActivity : AppCompatActivity() {
         if(city != null) {
             if (city!!.isEmpty()) {
                 binding.cityInputLayout.error = "É necessário inserir uma cidade."
+                loading(false)
                 return false
             }
         } else {
+            loading(false)
             return false
         }
         return true
@@ -75,6 +77,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun getData() {
         job = CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.Main) {
+                loading(true)
+            }
+
             var response: Response<Weather>? = null
             try {
                 response = weatherAPI.getWeatherData("$city")
@@ -133,6 +139,7 @@ class MainActivity : AppCompatActivity() {
                             view1.visibility = View.VISIBLE
                             view2.visibility = View.VISIBLE
                             view3.visibility = View.VISIBLE
+                            loading(false)
                         }
                     }
                 }
@@ -142,6 +149,7 @@ class MainActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     binding.cityInputLayout.errorIconDrawable = null
                     binding.cityInputLayout.error = "Cidade indisponível no momento."
+                    loading(false)
                 }
                 Log.i("api", "Erro ao fazer a requisição.")
             }
@@ -186,6 +194,16 @@ class MainActivity : AppCompatActivity() {
         if(view != null) {
             val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    private fun loading(isLoading: Boolean) {
+        if(isLoading) {
+            binding.btnSearch.isEnabled = false
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.btnSearch.isEnabled = true
+            binding.progressBar.visibility = View.INVISIBLE
         }
     }
 }
