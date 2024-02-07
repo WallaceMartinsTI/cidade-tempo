@@ -1,6 +1,6 @@
 ## 💻 Projeto
 
-Cidade Tempo é um projeto focado na busca de dados climáticos da cidade informada pelo usuário. A busca é feita atraves da API [Open Weather API](https://openweathermap.org/api).
+Cidade Tempo é um aplicativo focado na busca de dados climáticos da cidade informada pelo usuário. A busca é feita atraves da API [Open Weather API](https://openweathermap.org/api).
 
 <div align="center">
   <img src="./screenshot.png" />
